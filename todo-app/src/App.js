@@ -6,26 +6,50 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: v4(),
-      description: "task1",
-      completed: false
+      tasks: [
+        {
+          id: v4(),
+          description: "task1",
+          completed: false
+        },
+        {
+          id: v4(),
+          description: "task2",
+          completed: false
+        },
+        {
+          id: v4(),
+          description: "task3",
+          completed: false
+        }
+      ]
     };
   }
 
+  toggleTask(id, state) {
+    const tasks = state.tasks.map(task => {
+      if(task.id === id) return {...task, completed: !task.completed}
+      else return {...task}
+    })
+    const newState = {...state, tasks: tasks}
+    return newState
+  }
+
   render() {
-    const { description, completed } = this.state;
+    const { tasks } = this.state;
     return (
       <div className="App">
         <Form />
         <ul>
+        {tasks.map(({id, description, completed})=>(
           <li
             onClick={() => {
-              this.setState({ completed: !completed });
-            }}
+              this.setState(this.toggleTask(id, this.state))}}
             style={{ textDecoration: completed ? "line-through" : "none" }}
           >
             {description}
-          </li>
+          </li>        ))
+        }
         </ul>
       </div>
     );
