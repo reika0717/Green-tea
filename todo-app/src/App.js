@@ -36,16 +36,29 @@ class App extends Component {
   }
 
   addTask(description) {
-    const tasks = [...this.state.tasks, {id:v4(), description: description, completed: false}]
-    const state = {...this.state, tasks}
-    this.setState(state)
+    const tasks = [
+      ...this.state.tasks,
+      { id: v4(), description: description, completed: false }
+    ];
+    const state = { ...this.state, tasks };
+    this.setState(state);
+  }
+
+  removeTask(description) {
+    const tasks = this.state.tasks.map((task, i) => {
+      if(task.description === description){
+        this.state.tasks.splice(i, 1)
+        this.setState(this.state)
+      }
+    })
+
   }
 
   render() {
     const { tasks } = this.state;
     return (
       <div>
-        <Form onClick={description => this.addTask(description)}/>
+        <Form onClick={description => this.addTask(description)} remove={description => this.removeTask(description)}/>
         <ul>
           {tasks.map(({ id, description, completed }) => (
             <li

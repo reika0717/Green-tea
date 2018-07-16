@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({onClick}) => {
+export default ({onClick, remove}) => {
 	let input = ''
   return (
   	 <div>
@@ -9,6 +9,10 @@ export default ({onClick}) => {
   	 		onClick(input.value)
   	 		input.value=''
   	 	}}>add</button>
+  	 	<button onClick={() => {
+  	 		remove(input.value)
+  	 		input.value=''
+  	 	}}>remove</button>
   	 </div>
   )
 }
