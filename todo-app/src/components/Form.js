@@ -1,10 +1,14 @@
 import React from 'react';
 
-export default () => {
+export default ({onClick}) => {
+	let input = ''
   return (
   	 <div>
-  	 	<input type='text' />
-  	 	<button>add</button>
+  	 	<input ref={node => input = node} type='text' />
+  	 	<button onClick={() => {
+  	 		onClick(input.value)
+  	 		input.value=''
+  	 	}}>add</button>
   	 </div>
   )
 }

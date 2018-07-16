@@ -28,28 +28,36 @@ class App extends Component {
 
   toggleTask(id, state) {
     const tasks = state.tasks.map(task => {
-      if(task.id === id) return {...task, completed: !task.completed}
-      else return {...task}
-    })
-    const newState = {...state, tasks: tasks}
-    return newState
+      if (task.id === id) return { ...task, completed: !task.completed };
+      else return { ...task };
+    });
+    const newState = { ...state, tasks: tasks };
+    return newState;
+  }
+
+  addTask(description) {
+    const tasks = [...this.state.tasks, {id:v4(), description: description, completed: false}]
+    const state = {...this.state, tasks}
+    this.setState(state)
   }
 
   render() {
     const { tasks } = this.state;
     return (
-      <div className="App">
-        <Form />
+      <div>
+        <Form onClick={description => this.addTask(description)}/>
         <ul>
-        {tasks.map(({id, description, completed})=>(
-          <li
-            onClick={() => {
-              this.setState(this.toggleTask(id, this.state))}}
-            style={{ textDecoration: completed ? "line-through" : "none" }}
-          >
-            {description}
-          </li>        ))
-        }
+          {tasks.map(({ id, description, completed }) => (
+            <li
+              key={id}
+              onClick={() => {
+                this.setState(this.toggleTask(id, this.state));
+              }}
+              style={{ textDecoration: completed ? "line-through" : "none" }}
+            >
+              {description}
+            </li>
+          ))}
         </ul>
       </div>
     );
